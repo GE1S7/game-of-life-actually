@@ -1,4 +1,3 @@
-#import pygame
 import random
 import time
 
@@ -35,7 +34,7 @@ class Grid():
                                 neighbours += 1
                 #print(f"self.grid_list[({x},{y})] has {neighbours} neighbours")
 
-                if neighbours in range(2,3):
+                if neighbours in [2,3]:
                     self.grid_list[(x,y)] = 1
 
                 else:
@@ -56,9 +55,9 @@ generation = 1
 while True:
     if siatka.game_over():
         break
-    print(siatka.grid_list)
+    print(siatka.grid_list, end="\r")
     siatka.c_eval()
-    print("\n\n\n\n")
+    #print("\n\n\n\n")
     generation += 1
-    print(f"generation {generation} will start in 1 second")
+    #print(f"generation {generation} will start in 1 second")
     time.sleep(0.1)
