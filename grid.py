@@ -24,6 +24,25 @@ class Grid():
             else:
                 self.grid_list[i] = DEAD
 
+    def read(self, grin):
+        grnsplt = grin.linesplit()
+        self.height = len(grnsplt)
+        self.width = len(grnsplt[0])
+
+        for line in grnsplt:
+            if len(line) != self.width:
+                raise ValueError("width is not constant")
+            x = 0
+            for ch in line:
+                
+
+        
+            
+
+
+        
+
+
     def c_eval(self):
         '''evaluate the new value of cells in self.grid'''
         for x in  range(0, self.width):
@@ -31,41 +50,34 @@ class Grid():
             for y in range(0, self.height):
 
                 neighbours = 0
-                if x != 0 and x != self.width - 1 and y != 0 and y != self.height - 1:
-                    for i in range(x-1,x+2):
-                        for j in range(y-1,y+2):
-                            if (i,j) == (x,y):
-                                continue
 
-                            if x-1 < 0:
-                                i = self.width - 1
+                #if x != 0 and x != self.width - 1 and y != 0 and y != self.height - 1:
 
-                            if x == self.width:
-                                i = 0
+                for i in range(x-1,x+2):
 
-                            if y-1 < 0:
-                                j = self.height-1
+                    #edges
 
-                            if y == self.height:
-                                j = 0
-                            
+                    for j in range(y-1,y+2):
+                        if (i,j) == (x,y):
+                            continue
 
+                        if i == x-1 and x-1 < 0:
+                            continue
 
-                            if self.grid_list[(i, j)] == ALIVE:
-                                neighbours += 1
-                else:
-                    if x == 0:
-                        pass
+                        if i > self.width - 1:
+                            continue
+                             #print(i)
 
-                    if x == self.width - 1:
-                        pass
+                        if j == y-1 and  y-1 < 0:
+                            continue
+                             #print(j)
 
-                    if y == 0:
-                        pass
+                        if j > self.height - 1:
+                            continue
+                            #print(j)
 
-                    if y == self.height -1:
-                        pass
-
+                        if self.grid_list[(i, j)] == ALIVE:
+                            neighbours += 1
 
                 #print(f"self.grid_list[({x},{y})] has {neighbours} neighbours")
 

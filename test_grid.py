@@ -2,11 +2,46 @@ import unittest
 from grid import Grid
 
 class TestGrid(unittest.TestCase):
-    def test_c_eval(self):
-        siatka = Grid(100,100)
-        siatka.init_grid()
-        for i in siatka.grid_list.values():
-            i = 1
-        siatka.c_eval()
+    def test_read(self):
+        pass
 
-        self.assertEqual(siatka.grid_list[50,50],1)
+    def test_square(self):
+        '''square = still nature'''
+        test_square = '''
+░░░
+░██
+░██
+'''
+    
+
+
+    def test_spinner(self):
+        '''three squares in line spin'''
+        test_line_horizontal = '''
+░█░
+░█░
+░█░'''
+        test_line_vertical = '''
+░░░
+███
+░░░'''
+
+        # test: vertical -> horizontal
+
+        # test: horizontal -> vertical
+
+    def test_three_two_one(self):
+        '''boomerang folds and dies'''
+        test_boomerang = '''
+░█░
+░░█
+░█░''' 
+        test_fold =░ '''
+░░░
+░██
+░░░'''
+
+        test_death = '''
+░░░
+░░░
+░░░'''

@@ -9,7 +9,7 @@ curses.noecho()
 curses.cbreak()
 stdscr.keypad(True)
 
-siatka = Grid(9,9)
+siatka = Grid(3,3)
 siatka.init_grid()
 siatka.randomize()
 
@@ -18,9 +18,6 @@ siatka.randomize()
 generation = 1
 
 while True:
-    #if siatka.game_over():
-        #break
-        
     x,y = 0,0   
     while y < siatka.height:
         while x < siatka.width:
@@ -33,7 +30,7 @@ while True:
     siatka.c_eval()
     generation += 1
     stdscr.addstr(siatka.height+1, 0, f"gen: {generation}")
-    time.sleep(0.5)
+    time.sleep(1)
     stdscr.refresh()
 
 curses.nocbreak()
