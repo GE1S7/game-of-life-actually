@@ -1,6 +1,9 @@
 import random
 import time
 
+DEAD = "░"
+ALIVE = "█"
+
 class Grid():
     def __init__(self, width, height):
         self.width = width
@@ -11,12 +14,15 @@ class Grid():
         grid_dict = {}
         for x in range(0,self.width):
             for y in range(0,self.height):
-                self.grid_list[(x,y)] = 0
+                self.grid_list[(x,y)] = DEAD
 
     def randomize(self):
         '''sets random dead/alive values for each cell in the grid'''
         for i in self.grid_list.keys():
-            self.grid_list[i] = random.randint(0,1)
+            if random.randint(0,1) == 1:
+                self.grid_list[i] = ALIVE
+            else:
+                self.grid_list[i] = DEAD
 
     def c_eval(self):
         '''evaluate the new value of cells in self.grid'''
@@ -30,34 +36,50 @@ class Grid():
                         for j in range(y-1,y+2):
                             if (i,j) == (x,y):
                                 continue
-                            if self.grid_list[(i, j)] == 1:
+
+                            if x-1 < 0:
+                                i = self.width - 1
+
+                            if x == self.width:
+                                i = 0
+
+                            if y-1 < 0:
+                                j = self.height-1
+
+                            if y == self.height:
+                                j = 0
+                            
+
+
+                            if self.grid_list[(i, j)] == ALIVE:
                                 neighbours += 1
+                else:
+                    if x == 0:
+                        pass
+
+                    if x == self.width - 1:
+                        pass
+
+                    if y == 0:
+                        pass
+
+                    if y == self.height -1:
+                        pass
+
+
                 #print(f"self.grid_list[({x},{y})] has {neighbours} neighbours")
 
-                if neighbours in [2,3]:
-                    self.grid_list[(x,y)] = 1
+                if neighbours in [2,3] and self.grid_list[(x,y)] == ALIVE: 
+                    self.grid_list[(x,y)] = ALIVE
+
+                elif neighbours == 3 and self.grid_list[(x,y)] == DEAD:
+                    self.grid_list[(x,y)] = ALIVE
 
                 else:
-                    self.grid_list[(x,y)] = 0
+                    self.grid_list[(x,y)] = DEAD
 
     def game_over(self):
         for i in self.grid_list.values():
             if i != 0: 
                 return False
         return True
-
-siatka = Grid(10,10)
-siatka.init_grid()
-siatka.randomize()
-
-generation = 1
-
-while True:
-    if siatka.game_over():
-        break
-    print(siatka.grid_list, end="\r")
-    siatka.c_eval()
-    #print("\n\n\n\n")
-    generation += 1
-    #print(f"generation {generation} will start in 1 second")
-    time.sleep(0.1)
