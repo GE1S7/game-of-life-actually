@@ -25,22 +25,29 @@ class Grid():
                 self.grid_list[i] = DEAD
 
     def read(self, grin):
-        grnsplt = grin.linesplit()
-        self.height = len(grnsplt)
-        self.width = len(grnsplt[0])
+        print(grin)
+        self.init_grid()
+        grnsplt = grin.split("\n")
+        print(grnsplt)
+        self.height = len(grnsplt) - 2
+        print(self.height)
+        self.width = len(grnsplt[1])
 
+        y = 0 
         for line in grnsplt:
+            if line == "":
+                continue
             if len(line) != self.width:
                 raise ValueError("width is not constant")
+
             x = 0
             for ch in line:
-                
+                self.grid_list[(x,y)] = ch
+                x += 1
 
-        
-            
+            y += 1
+        print(self.grid_list)
 
-
-        
 
 
     def c_eval(self):
@@ -56,17 +63,17 @@ class Grid():
                 for i in range(x-1,x+2):
 
                     #edges
+                    if i == x-1 and x-1 < 0:
+                            continue
+
+                    if i > self.width - 1:
+                        continue
+                         #print(i)
+
 
                     for j in range(y-1,y+2):
                         if (i,j) == (x,y):
                             continue
-
-                        if i == x-1 and x-1 < 0:
-                            continue
-
-                        if i > self.width - 1:
-                            continue
-                             #print(i)
 
                         if j == y-1 and  y-1 < 0:
                             continue
@@ -79,7 +86,7 @@ class Grid():
                         if self.grid_list[(i, j)] == ALIVE:
                             neighbours += 1
 
-                #print(f"self.grid_list[({x},{y})] has {neighbours} neighbours")
+                print(f"self.grid_list[({x},{y})] has {neighbours} neighbours")
 
                 if neighbours in [2,3] and self.grid_list[(x,y)] == ALIVE: 
                     self.grid_list[(x,y)] = ALIVE
