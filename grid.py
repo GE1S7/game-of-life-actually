@@ -45,7 +45,7 @@ class Grid():
                 x += 1
 
             y += 1
-        print(self.grid_list)
+        # print(self.grid_list)
 
 
 
@@ -55,7 +55,7 @@ class Grid():
         for x in  range(0, self.width):
 
             for y in range(0, self.height):
-                print(f"searching for neighbours of {(x,y)}")
+                # print(f"searching for neighbours of {(x,y)}")
 
                 neighbours = 0
 
@@ -68,11 +68,11 @@ class Grid():
 
                     if i > self.width - 1:
                         continue
-                         #print(i)
+                         # print(i)
 
 
                     for j in range(y-1,y+2):
-                        print(f"checking for neighbour in: {(i,j)}")
+                        # print(f"checking for neighbour in: {(i,j)}")
 
                         if (i,j) == (x,y):
                             continue
@@ -89,13 +89,12 @@ class Grid():
                             neighbours += 1
 
 
-                print(f"self.grid_list[({x},{y})] has {neighbours} neighbours and is {self.grid_list[(x,y)]}")
+                # print(f"self.grid_list[({x},{y})] has {neighbours} neighbours and is {self.grid_list[(x,y)]}")
 
 
                 if neighbours == 3 and self.grid_list[(x,y)] == DEAD:
-                    print("hejo")
+                    # print("hejo")
                     new_grid_dict[(x,y)] = ALIVE
-                    print(self.grid_list[(x,y)])
 
                 elif neighbours < 4 and neighbours > 1 and self.grid_list[(x,y)] == ALIVE: 
                     new_grid_dict[(x,y)] = ALIVE
@@ -103,10 +102,10 @@ class Grid():
                 else:
                     new_grid_dict[(x,y)] = DEAD
 
-                print(f"the field self.grid_list[({x},{y})] is now {new_grid_dict[(x,y)]}")
+                # print(f"the field self.grid_list[({x},{y})] is now {new_grid_dict[(x,y)]}")
                 
         self.grid_list = new_grid_dict
-        print(f"final dict {new_grid_dict}")
+        # print(f"final dict {new_grid_dict}")
 
 
     def game_over(self):
