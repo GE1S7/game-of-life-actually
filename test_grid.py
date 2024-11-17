@@ -8,8 +8,7 @@ class TestGrid(unittest.TestCase):
         test_square = '''
 ░░░
 ░██
-░██
-'''
+░██'''
         test_grid_list = {(0,0):'░',(1,0):'░',(2,0):'░',
                           (0,1):'░',(1,1):'█',(2,1):'█',
                           (0,2):'░',(1,2):'█',(2,2):'█',
@@ -26,13 +25,14 @@ class TestGrid(unittest.TestCase):
         test_square = '''
 ░░░
 ░██
-░██
-'''
+░██'''
         g = Grid(1,1)
         g.read(test_square)
+        tg = g.grid_list
+        g.c_eval()
 
 
-        self.assertEqual(test_square, )
+        self.assertEqual(g.grid_list, tg )
     
 
 
@@ -51,10 +51,14 @@ class TestGrid(unittest.TestCase):
         hg = Grid(1,1)
 
 
-        vertical_dict = vg.read(test_line_vertical)
-        horizontal_dict = hg.read(tets_line_horizontal)
+        vg.read(test_line_vertical)
+        hg.read(test_line_horizontal)
 
+        vg.c_eval()
+
+        self.assertEqual(vg.grid_list, hg.grid_list)
         
+
 
         # test: vertical -> horizontal
 

@@ -25,13 +25,12 @@ class Grid():
                 self.grid_list[i] = DEAD
 
     def read(self, grin):
-        print(grin)
+        grin = grin.lstrip()
+        grin = grin.rstrip()
         self.init_grid()
         grnsplt = grin.split("\n")
-        print(grnsplt)
-        self.height = len(grnsplt) - 2
-        print(self.height)
-        self.width = len(grnsplt[1])
+        self.height = len(grnsplt)
+        self.width = len(grnsplt[0])
 
         y = 0 
         for line in grnsplt:
@@ -51,17 +50,18 @@ class Grid():
 
 
     def c_eval(self):
+        new_grid_dict = {}
         '''evaluate the new value of cells in self.grid'''
         for x in  range(0, self.width):
 
             for y in range(0, self.height):
+                print(f"searching for neighbours of {(x,y)}")
 
                 neighbours = 0
 
                 #if x != 0 and x != self.width - 1 and y != 0 and y != self.height - 1:
 
                 for i in range(x-1,x+2):
-
                     #edges
                     if i == x-1 and x-1 < 0:
                             continue
@@ -72,6 +72,8 @@ class Grid():
 
 
                     for j in range(y-1,y+2):
+                        print(f"checking for neighbour in: {(i,j)}")
+
                         if (i,j) == (x,y):
                             continue
 
@@ -86,16 +88,26 @@ class Grid():
                         if self.grid_list[(i, j)] == ALIVE:
                             neighbours += 1
 
-                print(f"self.grid_list[({x},{y})] has {neighbours} neighbours")
 
-                if neighbours in [2,3] and self.grid_list[(x,y)] == ALIVE: 
-                    self.grid_list[(x,y)] = ALIVE
+                print(f"self.grid_list[({x},{y})] has {neighbours} neighbours and is {self.grid_list[(x,y)]}")
 
-                elif neighbours == 3 and self.grid_list[(x,y)] == DEAD:
-                    self.grid_list[(x,y)] = ALIVE
+
+                if neighbours == 3 and self.grid_list[(x,y)] == DEAD:
+                    print("hejo")
+                    new_grid_dict[(x,y)] = ALIVE
+                    print(self.grid_list[(x,y)])
+
+                elif neighbours < 4 and neighbours > 1 and self.grid_list[(x,y)] == ALIVE: 
+                    new_grid_dict[(x,y)] = ALIVE
 
                 else:
-                    self.grid_list[(x,y)] = DEAD
+                    new_grid_dict[(x,y)] = DEAD
+
+                print(f"the field self.grid_list[({x},{y})] is now {new_grid_dict[(x,y)]}")
+                
+        self.grid_list = new_grid_dict
+        print(f"final dict {new_grid_dict}")
+
 
     def game_over(self):
         for i in self.grid_list.values():
