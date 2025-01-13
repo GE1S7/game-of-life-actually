@@ -19,7 +19,10 @@ def main(stdscr):
         x,y = 0,0   
         while y < siatka.height:
             while x < siatka.width:
-                stdscr.addstr(y,x,str(siatka.grid_list[(x,y)]))
+                try:
+                    stdscr.addstr(y,x,str(siatka.grid_list[(x,y)]))
+                except curses.error:
+                    pass
                 x += 1
             if x >= siatka.width:
                 x = 0
@@ -29,8 +32,12 @@ def main(stdscr):
 
         siatka.c_eval()
         generation += 1
-        stdscr.addstr(siatka.height+1, 0, f"gen: {generation}")
-        stdscr.addstr(siatka.height+2, 0, f"cursor_pos: {curses.getsyx()}")
+
+        try:
+            stdscr.addstr(siatka.height+1, 0, f"gen: {generation}")
+            stdscr.addstr(siatka.height+2, 0, f"cursor_pos: {curses.getsyx()}")
+        except curses.error:
+            pass
         time.sleep(0.00000000001)
         
         stdscr.refresh()
