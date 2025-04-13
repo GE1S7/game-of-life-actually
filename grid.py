@@ -4,6 +4,7 @@ import time
 DEAD = "░"
 ALIVE = "█"
 
+
 class Grid():
     def __init__(self, width, height):
         self.width = width

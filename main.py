@@ -5,10 +5,17 @@ import time
 import random
 
 
+def invert_boolean(p):
+    return not p
+
 def main(stdscr):
+    random = False
+    pause = True 
+
     siatka = Grid(80,40)
     siatka.init_grid()
-    siatka.randomize()
+    if random == True:
+        siatka.randomize()
 
     curses.curs_set(2) # set cursor visibility
     stdscr.nodelay(True) # don't stall the screen waiting for the input
@@ -16,6 +23,7 @@ def main(stdscr):
     cursor_y,cursor_x = stdscr.getyx()
 
     #win = curses.newwin(siatka.height, siatka.width, 7, 20)
+
 
     generation = 1
     
@@ -38,8 +46,9 @@ def main(stdscr):
 
 
 
-        siatka.c_eval()
-        generation += 1
+        if pause == False: 
+            siatka.c_eval()
+            generation += 1
 
         try:
             stdscr.addstr(siatka.height+1, 0, f"gen: {generation}")
@@ -64,6 +73,12 @@ def main(stdscr):
         # changing dead/alive state when spacebar hit 
         if keypress == 32:
             siatka.edit(cursor_x,cursor_y)
+
+
+        # (un)pause
+        if keypress == 112:
+            pause = invert_boolean(pause)
+
 
         
 
