@@ -93,7 +93,6 @@ class Grid():
 
 
                 if neighbours == 3 and self.grid_list[(x,y)] == DEAD:
-                    # print("hejo")
                     new_grid_dict[(x,y)] = ALIVE
 
                 elif neighbours < 4 and neighbours > 1 and self.grid_list[(x,y)] == ALIVE: 

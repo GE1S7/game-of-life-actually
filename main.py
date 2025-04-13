@@ -4,17 +4,37 @@ from curses import wrapper
 import time
 import random
 
+
+def move(stdscr):
+    keypress = stdscr.getch()
+    if keypress == curses.KEY_UP and y-1 >= 0:
+        stdscr.move(y-1, x)
+    elif keypress == curses.KEY_DOWN:
+        stdscr.move(y+1, x)
+    elif keypress == curses.KEY_RIGHT:
+        stdscr.move(y, x+1)
+    elif keypress == curses.KEY_LEFT and x-1 >= 0: 
+        stdscr.move(y, x-1)
+
 def main(stdscr):
-    siatka = Grid(299,60)
+    siatka = Grid(80,40)
     siatka.init_grid()
     siatka.randomize()
+
+    curses.curs_set(2) # set cursor visibility
+    stdscr.nodelay(True) # don't stall the screen waiting for the input
+    keypress = None
+    cursor_y,cursor_x = stdscr.getyx()
 
     #win = curses.newwin(siatka.height, siatka.width, 7, 20)
 
     generation = 1
+    
 
 
     while True:       
+        stdscr.clear()
+
 
         x,y = 0,0   
         while y < siatka.height:
@@ -38,8 +58,24 @@ def main(stdscr):
             stdscr.addstr(siatka.height+2, 0, f"cursor_pos: {curses.getsyx()}")
         except curses.error:
             pass
-        time.sleep(0.00000000001)
+        time.sleep(0.1) # can use curses.napms(<ms>) instead
+
+        stdscr.move(cursor_y, cursor_x)
+        
+        keypress = stdscr.getch()
+        if keypress == curses.KEY_UP and cursor_y-1 >= 0:
+            cursor_y -=1
+        elif keypress == curses.KEY_DOWN:
+            cursor_y += 1
+        elif keypress == curses.KEY_RIGHT:
+            cursor_x += 1
+        elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
+            cursor_x -= 1
+
         
         stdscr.refresh()
 
+
+
+#main(curses.initscr())
 wrapper(main)
