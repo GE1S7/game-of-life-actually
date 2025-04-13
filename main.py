@@ -46,7 +46,7 @@ def main(stdscr):
             stdscr.addstr(siatka.height+2, 0, f"cursor_pos: {curses.getsyx()}")
         except curses.error:
             pass
-        time.sleep(0.1) # can use curses.napms(<ms>) instead
+        #time.sleep(0.00000000000001) # can use curses.napms(<ms>) instead
 
         # cursor movement
         stdscr.move(cursor_y, cursor_x)
@@ -54,9 +54,9 @@ def main(stdscr):
         keypress = stdscr.getch()
         if keypress == curses.KEY_UP and cursor_y-1 >= 0:
             cursor_y -=1
-        elif keypress == curses.KEY_DOWN:
+        elif keypress == curses.KEY_DOWN and cursor_y < siatka.height-1:
             cursor_y += 1
-        elif keypress == curses.KEY_RIGHT:
+        elif keypress == curses.KEY_RIGHT and cursor_x < siatka.width-1:
             cursor_x += 1
         elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
             cursor_x -= 1
