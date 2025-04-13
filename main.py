@@ -5,17 +5,6 @@ import time
 import random
 
 
-def move(stdscr):
-    keypress = stdscr.getch()
-    if keypress == curses.KEY_UP and y-1 >= 0:
-        stdscr.move(y-1, x)
-    elif keypress == curses.KEY_DOWN:
-        stdscr.move(y+1, x)
-    elif keypress == curses.KEY_RIGHT:
-        stdscr.move(y, x+1)
-    elif keypress == curses.KEY_LEFT and x-1 >= 0: 
-        stdscr.move(y, x-1)
-
 def main(stdscr):
     siatka = Grid(80,40)
     siatka.init_grid()
@@ -33,7 +22,6 @@ def main(stdscr):
 
 
     while True:       
-        stdscr.clear()
 
 
         x,y = 0,0   
@@ -60,6 +48,7 @@ def main(stdscr):
             pass
         time.sleep(0.1) # can use curses.napms(<ms>) instead
 
+        # cursor movement
         stdscr.move(cursor_y, cursor_x)
         
         keypress = stdscr.getch()
@@ -72,7 +61,12 @@ def main(stdscr):
         elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
             cursor_x -= 1
 
+        # changing dead/alive state when spacebar hit 
+        if keypress == 32:
+            siatka.edit(cursor_x,cursor_y)
+
         
+
         stdscr.refresh()
 
 
