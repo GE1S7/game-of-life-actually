@@ -4,7 +4,7 @@ from twisted.internet.protocol import Protocol, ClientFactory
 
 class PlayerClient(Protocol):
     def dataReceived(self, data):
-        fmt = "!" + "c" * 32
+        fmt = "!" + "i" * 32 * 32
         grid_values = struct.unpack(fmt, data)
         print(grid_values)
 

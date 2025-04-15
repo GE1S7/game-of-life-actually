@@ -33,7 +33,8 @@ class GridMod(Protocol):
 
     def sendGrid(self):
         grid_now = list(self.grid.grid_list.values())
-        fmt = "!" + "c" * self.grid.width * self.grid.height
+        
+        fmt = "!" + "i" * self.grid.width * self.grid.height
         data = struct.pack(fmt, *grid_now)
         self.transport.write(data)
 
@@ -42,6 +43,7 @@ class GridModFactory(protocol.Factory):
     def __init__(self):
         self.grid = Grid(32,32)
         self.grid.init_grid()
+        self.grid.randomize()
         self.clients = []
     #create the grid here
     #pass it to the protocol
@@ -62,7 +64,7 @@ def main():
     factory.protocol = GridMod
     fmt = "!" + "c" * factory.grid.width * factory.grid.height
     looping_call = LoopingCall(server_loop, (factory))
-    loopDeferred = looping_call.start(1.0)
+    loopDeferred = looping_call.start(0.1)
     endpoints.serverFromString(reactor, "tcp:1234").listen(factory)
     reactor.run()
 

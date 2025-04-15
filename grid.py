@@ -1,8 +1,10 @@
 import random
 import time
 
-DEAD = "░"
-ALIVE = "█"
+# DEAD = "░"
+# ALIVE = "█"
+DEAD = 0
+ALIVE = 1
 
 
 class Grid():

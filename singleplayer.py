@@ -22,7 +22,6 @@ def singleplayer(stdscr):
     keypress = None
     cursor_y,cursor_x = stdscr.getyx()
 
-    #win = curses.newwin(siatka.height, siatka.width, 7, 20)
 
 
     generation = 1
@@ -31,6 +30,7 @@ def singleplayer(stdscr):
 
     while True:       
 
+        # display the curent state of the grid
 
         x,y = 0,0   
         while y < siatka.height:

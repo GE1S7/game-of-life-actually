@@ -2,10 +2,12 @@ import curses
 from curses import wrapper
 from singleplayer import invert_boolean
 from grid import Grid
+import struct
+from twisted.internet.protocol import Protocol
 
 def multiplayer(stdscr):
     pause = True
-    siatka = Grid(80,40)
+    siatka = Grid(32,32)
     siatka.init_grid()
     
     curses.curs_set(2) # set cursor visibility
