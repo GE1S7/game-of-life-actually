@@ -1,10 +1,10 @@
 import random
 import time
 
-# DEAD = "░"
-# ALIVE = "█"
-DEAD = 0
-ALIVE = 1
+# dead = "░"
+# alive = "█"
+dead = 0
+alive = 1
 
 
 class Grid():
@@ -17,15 +17,23 @@ class Grid():
         grid_dict = {}
         for x in range(0,self.width):
             for y in range(0,self.height):
-                self.grid_list[(x,y)] = DEAD
+                self.grid_list[(x,y)] = dead
+
+    def init_grid_tui(self):
+        dead = "░"
+        alive = "█"
+        grid_dict = {}
+        for x in range(0,self.width):
+            for y in range(0,self.height):
+                self.grid_list[(x,y)] = dead
 
     def randomize(self):
         '''sets random dead/alive values for each cell in the grid'''
         for i in self.grid_list.keys():
             if random.randint(0,1) == 1:
-                self.grid_list[i] = ALIVE
+                self.grid_list[i] = alive
             else:
-                self.grid_list[i] = DEAD
+                self.grid_list[i] = dead
 
     def read(self, grin):
         grin = grin.lstrip()
@@ -51,10 +59,10 @@ class Grid():
         # print(self.grid_list)
 
     def edit(self, x, y):
-        if self.grid_list[(x,y)] == DEAD:
-            self.grid_list[(x,y)] = ALIVE
-        elif self.grid_list[(x,y)] == ALIVE:
-            self.grid_list[(x,y)] = DEAD 
+        if self.grid_list[(x,y)] == dead:
+            self.grid_list[(x,y)] = alive
+        elif self.grid_list[(x,y)] == alive:
+            self.grid_list[(x,y)] = dead 
 
 
 
@@ -94,21 +102,21 @@ class Grid():
                             continue
                             #print(j)
 
-                        if self.grid_list[(i, j)] == ALIVE:
+                        if self.grid_list[(i, j)] == alive:
                             neighbours += 1
 
 
                 # print(f"self.grid_list[({x},{y})] has {neighbours} neighbours and is {self.grid_list[(x,y)]}")
 
 
-                if neighbours == 3 and self.grid_list[(x,y)] == DEAD:
-                    new_grid_dict[(x,y)] = ALIVE
+                if neighbours == 3 and self.grid_list[(x,y)] == dead:
+                    new_grid_dict[(x,y)] = alive
 
-                elif neighbours < 4 and neighbours > 1 and self.grid_list[(x,y)] == ALIVE: 
-                    new_grid_dict[(x,y)] = ALIVE
+                elif neighbours < 4 and neighbours > 1 and self.grid_list[(x,y)] == alive: 
+                    new_grid_dict[(x,y)] = alive
 
                 else:
-                    new_grid_dict[(x,y)] = DEAD
+                    new_grid_dict[(x,y)] = dead
 
                 # print(f"the field self.grid_list[({x},{y})] is now {new_grid_dict[(x,y)]}")
                 
