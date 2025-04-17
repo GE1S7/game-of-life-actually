@@ -12,7 +12,7 @@ def loadInterface(factory, interface):
 
 
 def run_client():
-    host = int(input("host ip: "))
+    host = input("host ip: ")
     port = int(input("port : "))
     factory = client.PlayerClientFactory()
     thread = Thread(target = wrapper, args = (interface, factory)) 
