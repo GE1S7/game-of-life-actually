@@ -6,6 +6,7 @@ from twisted.internet import reactor
 from twisted.internet.protocol import Protocol
 from twisted.internet.task import LoopingCall
 from twisted.internet import protocol, reactor, endpoints
+import time
 
 class GridMod(Protocol):
     def __init__(self,factory, grid):
@@ -56,6 +57,8 @@ def server_loop(factory):
     for client in factory.clients:
         client.sendGrid()
     print(factory.grid.grid_list.values())
+    time.sleep(0.1)
+
         
 
 

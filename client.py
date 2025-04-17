@@ -36,6 +36,7 @@ class PlayerClient(Protocol):
         #print("inprotocol gridlist id:", id(self.factory.grid.grid_list))
 
 class PlayerClientFactory(ClientFactory):
+    protocol = PlayerClient
 
     def __init__(self):
         self.grid = Grid(32,32)
