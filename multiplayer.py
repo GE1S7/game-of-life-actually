@@ -22,6 +22,5 @@ def run_client():
     #reactor.callLater(0, wrapper, interface, factory)
     reactor.connectTCP(host, port, factory) 
     reactor.run()
-    thread.exit()
 
 run_client()
