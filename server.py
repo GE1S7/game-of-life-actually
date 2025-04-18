@@ -67,7 +67,7 @@ def main():
     factory.protocol = GridMod
     fmt = "!" + "c" * factory.grid.width * factory.grid.height
     looping_call = LoopingCall(server_loop, (factory))
-    loopDeferred = looping_call.start(0.1)
+    loopDeferred = looping_call.start(0.05)
     endpoints.serverFromString(reactor, "tcp:1234").listen(factory)
     reactor.run()
 
