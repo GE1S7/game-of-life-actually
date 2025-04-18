@@ -42,7 +42,7 @@ class GridMod(Protocol):
 
 class GridModFactory(protocol.Factory):
     def __init__(self):
-        self.grid = Grid(32,32)
+        self.grid = Grid(64,64)
         self.grid.init_grid()
         self.grid.randomize()
         self.clients = []

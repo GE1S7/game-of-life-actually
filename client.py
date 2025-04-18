@@ -11,10 +11,10 @@ class PlayerClient(Protocol):
 
     def dataReceived(self, data):
         self.buffer += data 
-        while len(self.buffer) >= 4096:
-            chunk = self.buffer[:4096]
-            buffer = self.buffer[4096:]
-            fmt = "!" + "i" * 32 * 32
+        while len(self.buffer) >= self.factory.buffer_size:
+            chunk = self.buffer[:self.factory.buffer_size]
+            buffer = self.buffer[self.factory.buffer_size:]
+            fmt = "!" + "i" * self.factory.grid.width * self.factory.grid.height
             grid_values = struct.unpack(fmt, chunk)
             self.buffer = b''
             #print(grid_values)
@@ -24,9 +24,9 @@ class PlayerClient(Protocol):
             ALIVE = "█"
 
             i = 0
-            for x in range(0, 32):
+            for x in range(0, self.factory.grid.width):
 
-                for y in range(0,32):
+                for y in range(0,self.factory.grid.height):
 
                     if grid_values[i] == 0:
                         self.factory.grid.grid_list[(x,y)] = DEAD
@@ -50,7 +50,8 @@ class PlayerClient(Protocol):
 class PlayerClientFactory(ClientFactory):
 
     def __init__(self):
-        self.grid = Grid(32,32)
+        self.grid = Grid(64,64)
+        self.buffer_size = self.grid.width * self.grid.height * 4
         self.grid.init_grid()
         self.client = []
         #print("infactory gridlist_id", id(self.grid.grid_list))
