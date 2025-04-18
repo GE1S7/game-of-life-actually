@@ -10,14 +10,17 @@ def invert_boolean(p):
 
 
 def interface(stdscr, factory=None):
+    grid = factory.grid
     stdscr.clear()
-    curses.curs_set(2) # set cursor visibility
+    curses.curs_set(1) # set cursor visibility
+    curses.use_default_colors()
+    curses.can_change_color()
     stdscr.nodelay(True) # don't stall the screen while waiting for the input
     keypress = None
     cursor_y,cursor_x = stdscr.getyx()
+    pad = curses.newpad(grid.height, grid.width)
 
     while True:
-        grid = factory.grid
         stdscr.clear()
         # display the curent state of the grid
         x,y = 0,0   
@@ -32,6 +35,7 @@ def interface(stdscr, factory=None):
             if x >= grid.width:
                 x = 0
                 y += 1
+
 
         # cursor movement
         stdscr.move(cursor_y, cursor_x)

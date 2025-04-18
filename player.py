@@ -1,0 +1,1 @@
+# assign color to player
