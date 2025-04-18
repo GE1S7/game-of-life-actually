@@ -7,6 +7,7 @@ class PlayerClient(Protocol):
     def __init__(self, factory):
         self.factory = factory
         self.buffer = b''
+        factory.client.append(self)
 
     def dataReceived(self, data):
         self.buffer += data 
@@ -41,12 +42,17 @@ class PlayerClient(Protocol):
             #print(self.factory.grid.grid_list)
             #print("inprotocol gridlist id:", id(self.factory.grid.grid_list))
 
+    def sendCoord(self, x, y):
+        coord = struct.pack("!ii", x, y)
+        self.transport.write(coord)
+
+
 class PlayerClientFactory(ClientFactory):
-    protocol = PlayerClient
 
     def __init__(self):
         self.grid = Grid(32,32)
         self.grid.init_grid()
+        self.client = []
         #print("infactory gridlist_id", id(self.grid.grid_list))
 
     def startedConnecting(self, connector):
@@ -62,8 +68,6 @@ class PlayerClientFactory(ClientFactory):
     def clientConnectionFailed(self, connector, reason):
         print('Connection failed. Reason:', reason)
 
-    def passGrid(self):
-        return self.grid
-        
+
 
 

@@ -48,7 +48,8 @@ def interface(stdscr, factory=None):
 
         # changing dead/alive state when spacebar hit 
         elif keypress == 32:
-            pass
+            factory.client[0].sendCoord(cursor_x,cursor_y)
+            # sp
             #grid.edit(cursor_x,cursor_y)
 
         elif keypress == curses.KEY_END:
