@@ -30,7 +30,7 @@ class GridMod(Protocol):
     def dataReceived(self, data):
         if self.can_act == True:
             x, y = struct.unpack("!ii", data) # receive cell coordinates
-            grid.edit(x,y)
+            self.grid.edit(x,y)
 
     def sendGrid(self):
         grid_now = list(self.grid.grid_list.values())
