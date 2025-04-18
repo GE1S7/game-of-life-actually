@@ -24,6 +24,7 @@ def singleplayer(stdscr):
 
 
 
+
     generation = 1
     
 

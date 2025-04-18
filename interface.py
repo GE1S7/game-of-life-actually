@@ -5,9 +5,11 @@ from grid import Grid
 import struct
 import time
 
+def invert_boolean(p):
+    return not p
 
 
-def interface(stdscr, factory):
+def interface(stdscr, factory=None):
     stdscr.clear()
     curses.curs_set(2) # set cursor visibility
     stdscr.nodelay(True) # don't stall the screen while waiting for the input
@@ -15,18 +17,19 @@ def interface(stdscr, factory):
     cursor_y,cursor_x = stdscr.getyx()
 
     while True:
+        grid = factory.grid
         stdscr.clear()
-        # display the curent state of the factory.grid
+        # display the curent state of the grid
         x,y = 0,0   
-        while y < factory.grid.height:
-            while x < factory.grid.width:
-                #stdscr.addstr(y,x,str(factory.grid.grid_list[(x,y)]))
+        while y < grid.height:
+            while x < grid.width:
+                #stdscr.addstr(y,x,str(grid.grid_list[(x,y)]))
                 try:
-                    stdscr.addstr(y,x,str(factory.grid.grid_list[(x,y)]))
+                    stdscr.addstr(y,x,str(grid.grid_list[(x,y)]))
                 except curses.error:
                     pass
                 x += 1
-            if x >= factory.grid.width:
+            if x >= grid.width:
                 x = 0
                 y += 1
 
@@ -36,17 +39,23 @@ def interface(stdscr, factory):
         keypress = stdscr.getch()
         if keypress == curses.KEY_UP and cursor_y-1 >= 0:
             cursor_y -= 1
-        elif keypress == curses.KEY_DOWN and cursor_y < factory.grid.height-1:
+        elif keypress == curses.KEY_DOWN and cursor_y < grid.height-1:
             cursor_y += 1
-        elif keypress == curses.KEY_RIGHT and cursor_x < factory.grid.width-1:
+        elif keypress == curses.KEY_RIGHT and cursor_x < grid.width-1:
             cursor_x += 1
         elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
             cursor_x -= 1
 
         # changing dead/alive state when spacebar hit 
-        if keypress == 32:
+        elif keypress == 32:
             pass
-            #factory.grid.edit(cursor_x,cursor_y)
+            #grid.edit(cursor_x,cursor_y)
+
+        elif keypress == curses.KEY_END:
+            return 
+
+            
+            
 
         
         
