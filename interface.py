@@ -20,8 +20,11 @@ def interface(stdscr, factory=None):
     cursor_y,cursor_x = stdscr.getyx()
     pad = curses.newpad(grid.height, grid.width)
 
+
+
     while True:
         stdscr.clear()
+        window_size_y, window_size_x = stdscr.getmaxyx()
         # display the curent state of the grid
         x,y = 0,0   
         while y < grid.height:
@@ -35,6 +38,7 @@ def interface(stdscr, factory=None):
             if x >= grid.width:
                 x = 0
                 y += 1
+
 
 
         # cursor movement
@@ -65,5 +69,6 @@ def interface(stdscr, factory=None):
         
         
         stdscr.refresh()
+        pad.refresh(0, 0, 0, 0, window_size_y-1, window_size_x) 
         time.sleep(0.01666)
 
