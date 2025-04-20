@@ -73,7 +73,7 @@ def interface(stdscr, factory=None):
                 py += 1
         elif keypress == curses.KEY_RIGHT and cursor_x < grid.width-1:
             cursor_x += 1
-            if window_size_y - 5 <=  cx:
+            if window_size_x - 5 <=  cx:
                 px += 1
         elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
             cursor_x -= 1
@@ -98,5 +98,5 @@ def interface(stdscr, factory=None):
         #print("py: ", py, "window size y: ", window_size_y, "cursor_y ", cursor_y)
         
         stdscr.refresh()
-        pad.refresh(py, 0, 0, 0, window_size_y-1, window_size_x) 
+        pad.refresh(py, px, 0, 0, window_size_y-1, window_size_x-1) 
         time.sleep(0.01666)
