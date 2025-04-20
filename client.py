@@ -50,11 +50,7 @@ class PlayerClient(Protocol):
 class PlayerClientFactory(ClientFactory):
 
     def __init__(self):
-<<<<<<< HEAD
         self.grid = Grid(1000,1000)
-=======
-        self.grid = Grid(128,128)
->>>>>>> 4eabb11a7d6cb66df8d5419b5ea71ef14a368705
         self.buffer_size = self.grid.width * self.grid.height * 4
         self.grid.init_grid()
         self.client = []

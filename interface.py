@@ -21,11 +21,6 @@ def interface(stdscr, factory=None):
     pad = curses.newpad(grid.height, grid.width)
     cursor_y,cursor_x = pad.getyx()
     py,px = 0,0
-<<<<<<< HEAD
-
-    moving_border_bot = stdscr.getmaxyx()[0]
-=======
->>>>>>> 4eabb11a7d6cb66df8d5419b5ea71ef14a368705
 
 
 
@@ -34,7 +29,6 @@ def interface(stdscr, factory=None):
         pad.clear()
         window_size_y, window_size_x = stdscr.getmaxyx()
         wpos_y_down = window_size_x
-        moving_win_bot = window_size_y
         # display the curent state of the grid
         x,y = 0,0   
         while y < grid.height:
@@ -52,7 +46,6 @@ def interface(stdscr, factory=None):
         cy, cx = curses.getsyx()
         # For testing purposes:
         # display cursor location
-<<<<<<< HEAD
         #pad.addstr(py+cy, cx+1, f"cy, cx: {str(curses.getsyx())}")
         #pad.addstr(py+cy+1,cx+1, f"py, px: {str((py,px))}")
         
@@ -65,9 +58,6 @@ def interface(stdscr, factory=None):
 
 
 
-=======
-        pad.addstr(cy, cx, str(curses.getsyx()))
->>>>>>> 4eabb11a7d6cb66df8d5419b5ea71ef14a368705
 
 
         # cursor movement
@@ -77,11 +67,7 @@ def interface(stdscr, factory=None):
             cursor_y -= 1
         elif keypress == curses.KEY_DOWN and cursor_y < grid.height-1:
             cursor_y += 1
-<<<<<<< HEAD
             if window_size_y - 10 <=  cy:
-=======
-            if cursor_y < window_size_y and py + window_size_y // 1.75  < cursor_y:
->>>>>>> 4eabb11a7d6cb66df8d5419b5ea71ef14a368705
                 py += 1
         elif keypress == curses.KEY_RIGHT and cursor_x < grid.width-1:
             cursor_x += 1
@@ -102,12 +88,8 @@ def interface(stdscr, factory=None):
             
 
         
-<<<<<<< HEAD
         #print("py, px: ", py, px)
         #print("py: ", py, "window size y: ", window_size_y, "cursor_y ", cursor_y)
-=======
-        print("py, px: ", py, px)
->>>>>>> 4eabb11a7d6cb66df8d5419b5ea71ef14a368705
         
         stdscr.refresh()
         pad.refresh(py, 0, 0, 0, window_size_y-1, window_size_x) 
