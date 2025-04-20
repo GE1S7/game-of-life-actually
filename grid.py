@@ -60,7 +60,8 @@ class Grid():
         # print(self.grid_list)
 
     def select(self, x, y):
-        self.selected.append((x,y))
+        if (x,y) not in self.selected.keys():
+            self.selected.append((x,y))
 
     def edit(self, x, y):
         if self.grid_list[(x,y)] == dead:
