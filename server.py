@@ -13,6 +13,8 @@ class GridMod(Protocol):
         self.grid = grid
         self.factory = factory
         self.can_act = True
+        self.buffer_size = 8
+        self.buffer = b""
 
     """update grid state based on client's input and send it back with additional info"""
     def connectionMade(self):
@@ -29,7 +31,10 @@ class GridMod(Protocol):
 
     def dataReceived(self, data):
         if self.can_act == True:
-            x, y = struct.unpack("!ii", data) # receive cell coordinates
+            self.buffer +=  data # receive cell coordinates
+            if len(self.buffer) >= self.buffer_size:
+                x, y = struct.unpack("!ii", self.buffer[:self.buffer_size)
+                self.buffer = self.buffer[self.buffer_size:]
             self.grid.edit(x,y)
 
     def sendGrid(self):

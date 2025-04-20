@@ -56,7 +56,8 @@ def interface(stdscr, factory=None):
         #pad.addstr(py+cy+2,cx+10, f"pad_size: {str(pad.getmaxyx())}")
 
         # show id of key pressed
-        pad.addstr(py+cy+3, cx+2, f"key pressed: {keypress}")
+        pad.addstr(py+cy+3, cx+1, f"key pressed: {keypress}")
+        pad.addstr(py+cy+4,cx+1, f"selected: {grid.selected}")
 
 
 
@@ -82,10 +83,20 @@ def interface(stdscr, factory=None):
             cursor_x -= 1
             if 5 >=  cx:
                 px -= 1
+        # select cell
+        elif keypress == 118:
+            grid.select(cursor_x, cursor_y)
+
+            pass
 
         # changing dead/alive state when spacebar hit 
         elif keypress == 32:
-            factory.client[0].sendCoord(cursor_x,cursor_y)
+            if grid.selected != []:
+                for cell in grid.selected:
+                    factory.client[0].sendCoord(cell[0], cell[1])
+                grid.selected = []
+            else:
+                factory.client[0].sendCoord(cursor_x,cursor_y)
             # sp
             #grid.edit(cursor_x,cursor_y)
 
@@ -93,6 +104,8 @@ def interface(stdscr, factory=None):
             return 
 
         #print(f"\n\nnwindow size: {stdscr.getmaxyx()}")
+
+
             
             
 

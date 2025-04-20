@@ -12,6 +12,7 @@ class Grid():
         self.width = width
         self.height = height
         self.grid_list = {}
+        self.selected = []
 
     def init_grid(self):
         grid_dict = {}
@@ -57,6 +58,9 @@ class Grid():
 
             y += 1
         # print(self.grid_list)
+
+    def select(self, x, y):
+        self.selected.append((x,y))
 
     def edit(self, x, y):
         if self.grid_list[(x,y)] == dead:
