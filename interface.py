@@ -12,43 +12,53 @@ def invert_boolean(p):
 def interface(stdscr, factory=None):
     grid = factory.grid
     stdscr.clear()
+
     curses.curs_set(1) # set cursor visibility
     curses.use_default_colors()
     curses.can_change_color()
     stdscr.nodelay(True) # don't stall the screen while waiting for the input
     keypress = None
-    cursor_y,cursor_x = stdscr.getyx()
     pad = curses.newpad(grid.height, grid.width)
+    cursor_y,cursor_x = pad.getyx()
+    py,px = 0,0
 
 
 
     while True:
         stdscr.clear()
+        pad.clear()
         window_size_y, window_size_x = stdscr.getmaxyx()
+        wpos_y_down = window_size_x
+        moving_win_bot = window_size_y
         # display the curent state of the grid
         x,y = 0,0   
         while y < grid.height:
             while x < grid.width:
                 #stdscr.addstr(y,x,str(grid.grid_list[(x,y)]))
                 try:
-                    stdscr.addstr(y,x,str(grid.grid_list[(x,y)]))
+                    pad.addstr(y,x,str(grid.grid_list[(x,y)]))
                 except curses.error:
                     pass
                 x += 1
             if x >= grid.width:
                 x = 0
                 y += 1
-
+        
+        cy, cx = curses.getsyx()
+        # For testing purposes:
+        # display cursor location
+        pad.addstr(cy, cx, str(curses.getsyx()))
 
 
         # cursor movement
-        stdscr.move(cursor_y, cursor_x)
-        
+        pad.move(cursor_y, cursor_x)
         keypress = stdscr.getch()
         if keypress == curses.KEY_UP and cursor_y-1 >= 0:
             cursor_y -= 1
         elif keypress == curses.KEY_DOWN and cursor_y < grid.height-1:
             cursor_y += 1
+            if cursor_y < window_size_y and py + window_size_y // 1.75  < cursor_y:
+                py += 1
         elif keypress == curses.KEY_RIGHT and cursor_x < grid.width-1:
             cursor_x += 1
         elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
@@ -63,12 +73,13 @@ def interface(stdscr, factory=None):
         elif keypress == curses.KEY_END:
             return 
 
+        #print(f"\n\nnwindow size: {stdscr.getmaxyx()}")
             
             
 
         
+        print("py, px: ", py, px)
         
         stdscr.refresh()
-        pad.refresh(0, 0, 0, 0, window_size_y-1, window_size_x) 
+        pad.refresh(py, 0, 0, 0, window_size_y-1, window_size_x) 
         time.sleep(0.01666)
-
