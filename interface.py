@@ -25,8 +25,8 @@ def interface(stdscr, factory=None):
 
 
     while True:
-        stdscr.clear()
-        pad.clear()
+        stdscr.erase()
+        pad.erase()
         window_size_y, window_size_x = stdscr.getmaxyx()
         wpos_y_down = window_size_x
         # display the curent state of the grid
@@ -55,6 +55,9 @@ def interface(stdscr, factory=None):
         # size of pad (including the stuff outside the screen)
         #pad.addstr(py+cy+2,cx+10, f"pad_size: {str(pad.getmaxyx())}")
 
+        # show id of key pressed
+        pad.addstr(py+cy+3, cx+2, f"key pressed: {keypress}")
+
 
 
 
@@ -63,19 +66,19 @@ def interface(stdscr, factory=None):
         # cursor movement
         pad.move(cursor_y, cursor_x)
         keypress = stdscr.getch()
-        if keypress == curses.KEY_UP and cursor_y-1 >= 0:
+        if keypress == curses.KEY_UP or keypress == 107 and cursor_y-1 >= 0:
             cursor_y -= 1
             if 5 >=  cy:
                 py -= 1
-        elif keypress == curses.KEY_DOWN and cursor_y < grid.height-1:
+        elif keypress == curses.KEY_DOWN or keypress == 106 and cursor_y < grid.height-1:
             cursor_y += 1
             if window_size_y - 5 <=  cy:
                 py += 1
-        elif keypress == curses.KEY_RIGHT and cursor_x < grid.width-1:
+        elif keypress == curses.KEY_RIGHT or keypress == 108 and cursor_x < grid.width-1:
             cursor_x += 1
             if window_size_x - 5 <=  cx:
                 px += 1
-        elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
+        elif keypress == curses.KEY_LEFT or keypress == 104 and cursor_x-1 >= 0: 
             cursor_x -= 1
             if 5 >=  cx:
                 px -= 1
