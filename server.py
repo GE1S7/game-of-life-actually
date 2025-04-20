@@ -42,7 +42,7 @@ class GridMod(Protocol):
 
 class GridModFactory(protocol.Factory):
     def __init__(self):
-        self.grid = Grid(64,64)
+        self.grid = Grid(1000,1000)
         self.grid.init_grid()
         self.grid.randomize()
         self.clients = []
@@ -56,7 +56,7 @@ def server_loop(factory):
     factory.grid.c_eval()
     for client in factory.clients:
         client.sendGrid()
-    print(factory.grid.grid_list.values())
+    # print(factory.grid.grid_list.values())
     time.sleep(0.1)
 
         
