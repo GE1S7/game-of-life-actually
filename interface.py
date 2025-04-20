@@ -87,14 +87,19 @@ def interface(stdscr, factory=None):
         elif keypress == 118:
             grid.select(cursor_x, cursor_y)
 
-            pass
 
         # changing dead/alive state when spacebar hit 
         elif keypress == 32:
             if grid.selected != []:
-                for cell in grid.selected:
-                    factory.client[0].sendCoord(cell[0], cell[1])
+                for i in range(0,len(grid.selected)):
+                    factory.client[0].sendCoord(*grid.selected[i])
+                    
                 grid.selected = []
+
+
+                #for cell in grid.selected:
+                #    factory.client[0].sendCoord(cell[0], cell[1])
+                    
             else:
                 factory.client[0].sendCoord(cursor_x,cursor_y)
             # sp

@@ -32,10 +32,10 @@ class GridMod(Protocol):
     def dataReceived(self, data):
         if self.can_act == True:
             self.buffer +=  data # receive cell coordinates
-            if len(self.buffer) >= self.buffer_size:
+            while len(self.buffer) >= self.buffer_size:
                 x, y = struct.unpack("!ii", self.buffer[:self.buffer_size])
                 self.buffer = self.buffer[self.buffer_size:]
-            self.grid.edit(x,y)
+                self.grid.edit(x,y)
 
     def sendGrid(self):
         grid_now = list(self.grid.grid_list.values())
