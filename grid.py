@@ -62,6 +62,8 @@ class Grid():
     def select(self, x, y):
         if (x,y) not in self.selected:
             self.selected.append((x,y))
+        else:
+            self.selected.remove((x,y))
 
     def edit(self, x, y):
         if self.grid_list[(x,y)] == dead:
