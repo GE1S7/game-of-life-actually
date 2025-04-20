@@ -65,14 +65,20 @@ def interface(stdscr, factory=None):
         keypress = stdscr.getch()
         if keypress == curses.KEY_UP and cursor_y-1 >= 0:
             cursor_y -= 1
+            if 5 >=  cy:
+                py -= 1
         elif keypress == curses.KEY_DOWN and cursor_y < grid.height-1:
             cursor_y += 1
-            if window_size_y - 10 <=  cy:
+            if window_size_y - 5 <=  cy:
                 py += 1
         elif keypress == curses.KEY_RIGHT and cursor_x < grid.width-1:
             cursor_x += 1
+            if window_size_y - 5 <=  cx:
+                px += 1
         elif keypress == curses.KEY_LEFT and cursor_x-1 >= 0: 
             cursor_x -= 1
+            if 5 >=  cx:
+                px -= 1
 
         # changing dead/alive state when spacebar hit 
         elif keypress == 32:
