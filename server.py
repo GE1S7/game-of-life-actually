@@ -33,7 +33,7 @@ class GridMod(Protocol):
         if self.can_act == True:
             self.buffer +=  data # receive cell coordinates
             if len(self.buffer) >= self.buffer_size:
-                x, y = struct.unpack("!ii", self.buffer[:self.buffer_size)
+                x, y = struct.unpack("!ii", self.buffer[:self.buffer_size])
                 self.buffer = self.buffer[self.buffer_size:]
             self.grid.edit(x,y)
 
