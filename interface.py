@@ -62,6 +62,7 @@ def interface(stdscr, factory=None):
         #pad.addstr(py+cy+3, cx+1, f"key pressed: {keypress}")
         #pad.addstr(py+cy+4,cx+1, f"selected: {grid.selected}")
         #pad.border()
+        #stdscr.border()
 
 
 
@@ -117,5 +118,5 @@ def interface(stdscr, factory=None):
         #print("py: ", py, "window size y: ", window_size_y, "cursor_y ", cursor_y)
         
         stdscr.refresh()
-        pad.refresh(py, px, padposy, padposx, window_size_y-1, window_size_x-1) 
+        pad.refresh(py, px, padposy+1, padposx+1, window_size_y-1, window_size_x-1) 
         time.sleep(0.01666)
