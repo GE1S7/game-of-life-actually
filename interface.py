@@ -53,9 +53,6 @@ def interface(stdscr, factory=None):
                 x = 0
                 y += 1
 
-        for cell in grid.selected:
-            pad.addch(cell[1], cell[0], str(grid.grid_list[cursor_x,cursor_y]), curses.A_DIM)
-            pad.addch(cell[1], cell[0], str(grid.grid_list[cursor_x,cursor_y]), curses.color_pair(47))
         cy, cx = curses.getsyx()
         # For testing purposes:
         # display cursor location
