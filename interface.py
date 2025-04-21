@@ -54,14 +54,7 @@ def interface(stdscr, factory=None):
                 y += 1
 
         cy, cx = curses.getsyx()
-        # For testing purposes:
-        # display cursor location
-        #pad.addstr(py+cy, cx+1, f"cy, cx: {str(curses.getsyx())}")
-        #pad.addstr(py+cy+1,cx+1, f"py, px: {str((py,px))}")
         
-        # size of the visible window
-        #pad.addstr(py+cy+2, x+1, f"stdscr_size: {str(stdscr.getmaxyx())}")
-
         # size of pad (including the stuff outside the screen)
         #pad.addstr(py+cy+2,cx+10, f"pad_size: {str(pad.getmaxyx())}")
 
@@ -80,15 +73,15 @@ def interface(stdscr, factory=None):
         keypress = stdscr.getch()
         if (keypress == curses.KEY_UP or keypress == 107) and cursor_y-1 >= 0:
             cursor_y -= 1
-            if 5 >=  cy:
+            if 5 >=  cy and py > 0:
                 py -= 1
         elif (keypress == curses.KEY_DOWN or keypress == 106) and cursor_y < grid.height-1:
             cursor_y += 1
-            if window_size_y - 5 <=  cy:
+            if window_size_y - 5 <=  cy: 
                 py += 1
         elif (keypress == curses.KEY_RIGHT or keypress == 108) and cursor_x < grid.width-1:
             cursor_x += 1
-            if window_size_x - 5 <=  cx:
+            if window_size_x - 5 <=  cx and px > 0:
                 px += 1
         elif (keypress == curses.KEY_LEFT or keypress == 104) and cursor_x-1 >= 0: 
             cursor_x -= 1
@@ -120,7 +113,7 @@ def interface(stdscr, factory=None):
             return 
 
         #print(f"\n\nnwindow size: {stdscr.getmaxyx()}")
-        #print("py, px: ", py, px)
+        #print(f"py, px: {py},{px}; cy, cx: {cy},{cx}; WinSize: {window_size_y},{window_size_x}; key: {keypress}")
         #print("py: ", py, "window size y: ", window_size_y, "cursor_y ", cursor_y)
         
         stdscr.refresh()
