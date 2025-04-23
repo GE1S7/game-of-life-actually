@@ -13,6 +13,7 @@ class Grid():
         self.height = height
         self.grid_list = {}
         self.selected = []
+        self.players = []
 
     def init_grid(self):
         grid_dict = {}
@@ -103,7 +104,7 @@ class Grid():
 
                         if j == y-1 and  y-1 < 0:
                             continue
-                             #print(j)
+           #print(j)
 
                         if j > self.height - 1:
                             continue

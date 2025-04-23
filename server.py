@@ -20,6 +20,7 @@ class GridMod(Protocol):
     def connectionMade(self):
         print("Player joined")
         self.factory.clients.append(self)
+        self.grid.players.append(self)
         print(self.factory.clients)
         self.player_id = len(self.factory.clients)
         self.sendGrid()
