@@ -9,6 +9,17 @@ import time
 def invert_boolean(p):
     return not p
 
+def curses_display_setup(stdscr):
+    curses.start_color()
+    curses.use_default_colors()
+    curses.can_change_color()
+    #
+    for i in range(0, curses.COLORS):
+        curses.init_pair(i + 1, i, -1)
+    stdscr.nodelay(True) # don't stall the screen while waiting for the input
+
+
+
 def interface(stdscr, factory=None):
     DEAD = "░"
     ALIVE = "█"
@@ -16,7 +27,7 @@ def interface(stdscr, factory=None):
     if factory is not None:
         grid = factory.grid
 
-    #cursor = stdscr.keypad(True)
+    cursor = stdscr.keypad(True)
 
     curses.curs_set(0) # set cursor visibility
     curses.start_color()
@@ -40,34 +51,31 @@ def interface(stdscr, factory=None):
     window_size_y, window_size_x = stdscr.getmaxyx()
 
     # run menu on startup
-    menu = False 
+    menu = False
     game = True 
     
-    #menu_width = 14
-    #menu_height = 16
-    #menu_pad = curses.newpad(14,16)
-    #menu_pos_y_top = window_size_y//2 - 7
-    #menu_pos_x_top = window_size_x//2 - 8
-    #menu_pos_y_bot = window_size_y//2 + 7
-    #menu_pos_x_bot = window_size_x//2 + 8
+    menu_width = 14
+    menu_height = 16
+    menu_pad = curses.newpad(14,16)
+    menu_pos_y_top = window_size_y//2 - 7
+    menu_pos_x_top = window_size_x//2 - 8
+    menu_pos_y_bot = window_size_y//2 + 7
+    menu_pos_x_bot = window_size_x//2 + 8
 
-    #menu_panel = curses.panel.new_panel(menu_pad)
+    menu_panel = curses.panel.new_panel(menu_pad)
     #menu_panel.top()
     #curses.panel.update_panels()
 
-    #main_menu = {"Singleplayer":{"Versus":"","Classic GOL":""}, "Multiplayer ":""}
-    #current_option = main_menu
-    #highlight_option = 0
+    main_menu = {"Singleplayer":{"Versus":"","Classic GOL":""}, "Multiplayer ":""}
+    current_option = main_menu
+    highlight_option = 0
 
-    stdscr.clear()
 
     while True:
+        if menu == False:
+            stdscr.erase()
+        menu_pad.erase()
         pad.erase()
-        #if menu == False:
-        #    stdscr.erase()
-        if menu == True:
-            menu_pad.erase()
-        window_size_y, window_size_x = stdscr.getmaxyx()
         wpos_y_down = window_size_x
         keypress = stdscr.getch()
 
@@ -90,13 +98,19 @@ def interface(stdscr, factory=None):
                 highlight_option += 1
 
             elif keypress == 10:
+                print(list(current_option.keys())[highlight_option])
                 match list(current_option.keys())[highlight_option]:
                     case "Multiplayer ":
+                        print(menu)
                         menu = False
                         curses.curs_set(1) # set cursor visibility
 
 
+            
+
+
         if game == True:
+
             # display the curent state of the grid
             x,y = 0,0   
             while y < grid.height:
@@ -137,7 +151,6 @@ def interface(stdscr, factory=None):
                         py -= 1
                 elif (keypress == curses.KEY_DOWN or keypress == 106) and cursor_y < grid.height-1:
                     cursor_y += 1
-                    stdscr.erase()
                     if window_size_y - 5 <=  cy: 
                         py += 1
                 elif (keypress == curses.KEY_RIGHT or keypress == 108) and cursor_x < grid.width-1:
@@ -187,6 +200,7 @@ def interface(stdscr, factory=None):
 
         if menu == True:
             menu_pad.noutrefresh(0,0, menu_pos_y_top, menu_pos_x_top, menu_pos_y_bot, menu_pos_x_bot)
+
 
         curses.doupdate()
         time.sleep(0.01666)
