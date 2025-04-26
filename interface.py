@@ -112,8 +112,7 @@ def interface(stdscr, factory=None):
                     try:
                         if (x, y) in grid.selected:
                             pad.addstr(
-                                y, x, str(grid.grid_list[(x, y)])
-                                #y, x, str(grid.grid_list[(x, y)]), curses.color_pair(47)
+                                y, x, str(grid.grid_list[(x, y)]), curses.color_pair(47)
                             )
                         else:
                             pad.addstr(y, x, str(grid.grid_list[(x, y)])),
@@ -206,6 +205,5 @@ def interface(stdscr, factory=None):
                 0, 0, menu_pos_y_top, menu_pos_x_top, menu_pos_y_bot, menu_pos_x_bot
             )
 
-        #time.sleep(0.01666)
+        time.sleep(0.01666)
         curses.doupdate()
-        stdscr.timeout(17)
