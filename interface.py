@@ -1,14 +1,10 @@
 import curses
 import curses.panel
 from curses import wrapper
-from singleplayer import invert_boolean
 from grid import Grid
 import struct
 import time
 
-
-def invert_boolean(p):
-    return not p
 
 
 def interface(stdscr, factory=None):
@@ -21,7 +17,7 @@ def interface(stdscr, factory=None):
 
     # cursor = stdscr.keypad(True)
 
-    curses.curs_set(1)  # set cursor visibility
+    curses.curs_set(0)  # set cursor visibility
     curses.start_color()
     curses.use_default_colors()
     curses.can_change_color()
@@ -43,32 +39,28 @@ def interface(stdscr, factory=None):
     window_size_y, window_size_x = stdscr.getmaxyx()
 
     # run menu on startup
-    menu = False
+    menu = True
     game = True
 
-    # menu_width = 14
-    # menu_height = 16
-    # menu_pad = curses.newpad(14,16)
-    # menu_pos_y_top = window_size_y//2 - 7
-    # menu_pos_x_top = window_size_x//2 - 8
-    # menu_pos_y_bot = window_size_y//2 + 7
-    # menu_pos_x_bot = window_size_x//2 + 8
+    menu_width = 14
+    menu_height = 16
+    menu_pad = curses.newpad(14,16)
 
-    # menu_panel = curses.panel.new_panel(menu_pad)
-    # menu_panel.top()
-    # curses.panel.update_panels()
+    menu_panel = curses.panel.new_panel(menu_pad)
+    menu_panel.top()
+    curses.panel.update_panels()
 
-    # main_menu = {"Singleplayer":{"Versus":"","Classic GOL":""}, "Multiplayer ":""}
-    # current_option = main_menu
-    # highlight_option = 0
+    main_menu = {"Singleplayer":{"Versus":"","Classic GOL":""}, "Multiplayer ":""}
+    current_option = main_menu
+    highlight_option = 0
 
-    e = 0
+    e = False
 
     while True:
-        if e == 60:
+        if e:
             stdscr.erase()
-            e += 1 
-        #pad.erase()
+            e = False
+
 
         if menu == True:
             menu_pad.erase()
@@ -186,6 +178,10 @@ def interface(stdscr, factory=None):
                         else:
                             grid.edit(cursor_x, cursor_y)
 
+                elif keypress == curses.KEY_RESIZE:
+                    stdscr.erase()
+                    menu = False
+
                 elif keypress == curses.KEY_END:
                     return
 
@@ -201,6 +197,10 @@ def interface(stdscr, factory=None):
 
 
         if menu == True:
+            menu_pos_y_top = window_size_y//2 - 7
+            menu_pos_x_top = window_size_x//2 - 8
+            menu_pos_y_bot = window_size_y//2 + 7
+            menu_pos_x_bot = window_size_x//2 + 8
             menu_pad.noutrefresh(
                 0, 0, menu_pos_y_top, menu_pos_x_top, menu_pos_y_bot, menu_pos_x_bot
             )

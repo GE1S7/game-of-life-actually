@@ -67,7 +67,9 @@ class PlayerClientFactory(ClientFactory):
         return PlayerClient(self)
 
     def clientConnectionLost(self, connector, reason):
-        print("Lost connection. Reason:", reason)
+        #print("Lost connection. Reason:", reason)
+        pass
 
     def clientConnectionFailed(self, connector, reason):
-        print("Connection failed. Reason:", reason)
+        #print("Connection failed. Reason:", reason)
+        pass
